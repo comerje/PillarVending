@@ -12,6 +12,8 @@ public:
 	eTestResult TestDisplayWhenTotalIs10Cents();
 	eTestResult TestDisplayWhenTotalIs15Cents();
 	eTestResult TestDisplayWhenTotalIs25Cents();
+	eTestResult TestDisplaySoldOutWhenNoInventory();
+	eTestResult TestDisplayAmountInsertedAfterSoldOut();
 };
 
 #endif

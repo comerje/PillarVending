@@ -31,3 +31,8 @@ void CoinMechanism::Transfer(std::list<eCoin>& transferTo)
 	transferTo.insert(transferTo.end(), m_coins.begin(), m_coins.end());
 	m_coins.clear();
 }
+
+void CoinMechanism::Clear()
+{
+	m_coins.clear();
+}

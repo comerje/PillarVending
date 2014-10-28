@@ -51,3 +51,44 @@ eTestResult TestDisplay::TestDisplayWhenTotalIs25Cents()
 
 	return (result == "$0.25" ? eTestResult::Passed : eTestResult::Failed);
 }
+
+eTestResult TestDisplay::TestDisplaySoldOutWhenNoInventory()
+{
+	VendingMachine vm;
+	vm.InsertCoin(eCoin::Quarter);
+	vm.InsertCoin(eCoin::Quarter);
+	vm.InsertCoin(eCoin::Quarter);
+	vm.InsertCoin(eCoin::Quarter);
+	vm.Dispense(eProducts::Cola);
+	vm.Display();
+	vm.InsertCoin(eCoin::Quarter);
+	vm.InsertCoin(eCoin::Quarter);
+	vm.InsertCoin(eCoin::Quarter);
+	vm.InsertCoin(eCoin::Quarter);
+	vm.Dispense(eProducts::Cola);
+
+	std::string result = vm.Display();
+
+	return (result == "SOLD OUT" ? eTestResult::Passed : eTestResult::Failed);
+}
+
+eTestResult TestDisplay::TestDisplayAmountInsertedAfterSoldOut()
+{
+	VendingMachine vm;
+	vm.InsertCoin(eCoin::Quarter);
+	vm.InsertCoin(eCoin::Quarter);
+	vm.InsertCoin(eCoin::Quarter);
+	vm.InsertCoin(eCoin::Quarter);
+	vm.Dispense(eProducts::Cola);
+	vm.Display();
+	vm.InsertCoin(eCoin::Quarter);
+	vm.InsertCoin(eCoin::Quarter);
+	vm.InsertCoin(eCoin::Quarter);
+	vm.InsertCoin(eCoin::Quarter);
+	vm.Dispense(eProducts::Cola);
+	vm.Display();
+
+	std::string result = vm.Display();
+
+	return (result == "$1.00" ? eTestResult::Passed : eTestResult::Failed);
+}

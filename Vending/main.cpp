@@ -13,7 +13,9 @@ void RunTestDisplay()
 		<< (tests.TestDisplayWhenTotalIs5Cents() == eTestResult::Passed  ? "Passed" : "Failed") << std::endl
 		<< (tests.TestDisplayWhenTotalIs10Cents() == eTestResult::Passed ? "Passed" : "Failed") << std::endl
 		<< (tests.TestDisplayWhenTotalIs15Cents() == eTestResult::Passed ? "Passed" : "Failed") << std::endl
-		<< (tests.TestDisplayWhenTotalIs25Cents() == eTestResult::Passed ? "Passed" : "Failed") << std::endl;
+		<< (tests.TestDisplayWhenTotalIs25Cents() == eTestResult::Passed ? "Passed" : "Failed") << std::endl
+		<< (tests.TestDisplaySoldOutWhenNoInventory() == eTestResult::Passed ? "Passed" : "Failed") << std::endl
+		<< (tests.TestDisplayAmountInsertedAfterSoldOut() == eTestResult::Passed ? "Passed" : "Failed") << std::endl;
 	std::cout << std::endl;
 }
 

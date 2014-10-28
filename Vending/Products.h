@@ -2,6 +2,6 @@
 #ifndef PRODUCTS_H__
 #define PRODUCTS_H__
 
-enum eProducts { Cola, Chips, Candy };
+enum eProducts { NoProduct = 0, Cola, Chips, Candy };
 
 #endif

@@ -14,6 +14,7 @@ public:
 	void InsertCoin(eCoin coin);
 	int Total();
 	void Transfer(std::list<eCoin>& transferTo);
+	void Clear();
 
 private:
 	std::list<eCoin> m_coins;
