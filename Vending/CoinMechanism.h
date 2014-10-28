@@ -13,13 +13,16 @@ public:
 	~CoinMechanism();
 
 	void InsertCoin(eCoin coin);
-	int Total();
+	int Total() const;
 	void Transfer(std::list<eCoin>& transferTo);
 	void Clear();
-	//int operator[](eCoin coinType);
 	int& operator[](eCoin coinType);
 
 private:
+	// don't want these being used
+	CoinMechanism(const CoinMechanism& cm);
+	CoinMechanism& operator=(const CoinMechanism& rhs);
+
 	std::list<eCoin> m_coins;
 	std::map<eCoin, int> m_coinInventory;
 };

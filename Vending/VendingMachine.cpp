@@ -5,9 +5,6 @@
 VendingMachine::VendingMachine()
 	:m_state(eVendingState::Waiting)
 {
-	m_inventory.insert(std::map<eProducts, Product>::value_type(eProducts::Candy, Product(eProducts::Candy, 65, 1)));
-	m_inventory.insert(std::map<eProducts, Product>::value_type(eProducts::Chips, Product(eProducts::Chips, 50, 1)));
-	m_inventory.insert(std::map<eProducts, Product>::value_type(eProducts::Cola, Product(eProducts::Cola, 100, 1)));
 }
 
 VendingMachine::~VendingMachine()
@@ -16,7 +13,7 @@ VendingMachine::~VendingMachine()
 
 void VendingMachine::InsertCoin(eCoin coin)
 {
-	if(eCoin::Penny == coin)
+	if(!IsCoinValid(coin))
 	{
 		CoinReturn.push_back(coin);
 		return;
@@ -38,18 +35,18 @@ std::string VendingMachine::Display()
 		break;
 	case eVendingState::ValidCoin: return StringFormatter::FormatCurrency(m_coinMechanism.Total());
 	case eVendingState::Dispense:
-		if(!m_coinMechanism.Total())
+		if(!IsMoneyInMachine())
 			m_state = eVendingState::Waiting;
 		else
 			m_state = eVendingState::ValidCoin;
 		
-		return std::string("PRICE " + StringFormatter::FormatCurrency(m_inventory.find(m_product)->second.Price()));
+		return std::string("PRICE " + StringFormatter::FormatCurrency(m_inventory.GetPrice(m_product)));
 		break;
 	case eVendingState::Complete: 
 		m_state = eVendingState::Waiting;
 		return std::string("THANK YOU");
 	case eVendingState::OutOfStock:
-		if(!m_coinMechanism.Total())
+		if(!IsMoneyInMachine())
 			m_state = eVendingState::Waiting;
 		else
 			m_state = eVendingState::ValidCoin;
@@ -65,8 +62,8 @@ void VendingMachine::Dispense(eProducts product)
 	m_state = eVendingState::Dispense;
 	m_product = product;
 
-	Product& tempProduct = m_inventory.find(product)->second;
-	if(m_coinMechanism.Total() < tempProduct.Price())
+	Product& tempProduct = m_inventory.GetProduct(product);
+	if(NeedMoreMoneyInserted(m_coinMechanism.Total(), tempProduct.Price()))
 		return;
 
 	if(tempProduct.OutOfStock())
@@ -89,7 +86,7 @@ void VendingMachine::ReturnCoins()
 
 void VendingMachine::MakeChange()
 {
-	int toReturn = m_coinMechanism.Total() - m_inventory.find(m_product)->second.Price();
+	int toReturn = m_coinMechanism.Total() - m_inventory.GetPrice(m_product);
 	if(0 == toReturn)
 		return;
 
@@ -128,4 +125,18 @@ void VendingMachine::ReturnCoin(eCoin type, int quantityToReturn)
 		--(m_coinMechanism[type]);
 		CoinReturn.push_back(type);
 	}
+}
+
+VendingMachine::VendingMachine(const VendingMachine& vm)
+{
+}
+
+VendingMachine& VendingMachine::operator=(const VendingMachine& rhs)
+{
+	if(this == &rhs)
+		return *this;
+
+	// code goes here
+
+	return *this;
 }

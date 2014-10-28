@@ -22,7 +22,7 @@ void CoinMechanism::InsertCoin(eCoin coin)
 	m_coins.push_back(coin);
 }
 
-int CoinMechanism::Total()
+int CoinMechanism::Total() const
 {
 	int total = 0;
 	for(std::list<eCoin>::const_iterator iter = m_coins.begin(); iter != m_coins.end(); ++iter)
@@ -48,4 +48,18 @@ void CoinMechanism::Clear()
 int& CoinMechanism::operator[](eCoin coinType)
 {
 	return m_coinInventory.find(coinType)->second;
+}
+
+CoinMechanism::CoinMechanism(const CoinMechanism& cm)
+{
+}
+
+CoinMechanism& CoinMechanism::operator=(const CoinMechanism& rhs)
+{
+	if(this == &rhs)
+		return *this;
+
+	// code goes here
+
+	return *this;
 }
