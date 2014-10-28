@@ -43,7 +43,7 @@
       <Filter>Tests\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TestReturnCoins.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Tests\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -78,7 +78,7 @@
       <Filter>Tests\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TestReturnCoins.h">
-      <Filter>Header Files</Filter>
+      <Filter>Tests\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

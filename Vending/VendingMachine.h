@@ -19,6 +19,7 @@ public:
 	void InsertCoin(eCoin coin);
 	std::string Display();
 	void Dispense(eProducts product);
+	void ReturnCoins();
 
 	std::list<eCoin> CoinReturn;
 

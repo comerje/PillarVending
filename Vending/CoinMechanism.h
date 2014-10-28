@@ -11,8 +11,9 @@ public:
 	CoinMechanism();
 	~CoinMechanism();
 
-	void insertCoin(eCoin coin);
-	int total();
+	void InsertCoin(eCoin coin);
+	int Total();
+	void Transfer(std::list<eCoin>& transferTo);
 
 private:
 	std::list<eCoin> m_coins;

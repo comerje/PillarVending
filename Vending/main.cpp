@@ -45,7 +45,9 @@ void RunTestReturnCoins()
 {
 	TestReturnCoins tests;
 	std::cout << "Test Return Coins" << std::endl
-		<< (tests.TestReturn3Coins() == eTestResult::Passed ? "Passed" : "Failed") << std::endl;
+		<< (tests.TestReturn3Coins() == eTestResult::Passed ? "Passed" : "Failed") << std::endl
+		<< (tests.TestInsert6QuartersAndReturnThem() == eTestResult::Passed ? "Passed" : "Failed") << std::endl
+		<< (tests.TestDisplayInsertCoinsAfterReturning() == eTestResult::Passed ? "Passed" : "Failed") << std::endl;
 	std::cout << std::endl;
 }
 
