@@ -5,8 +5,10 @@
 #include "Coin.h"
 #include "VendingState.h"
 #include "CoinMechanism.h"
+#include "Products.h"
 #include <string>
 #include <list>
+#include <map>
 
 class VendingMachine
 {
@@ -16,12 +18,15 @@ public:
 
 	void InsertCoin(eCoin coin);
 	std::string Display();
+	void Dispense(eProducts product);
 
 	std::list<eCoin> CoinReturn;
 
 private:
 	eVendingState m_state;
 	CoinMechanism m_coinMechanism;
+	eProducts m_product;
+	std::map<eProducts, int> m_productPriceMap;
 };
 
 #endif

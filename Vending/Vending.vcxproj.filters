@@ -39,6 +39,9 @@
     <ClCompile Include="TestCoin.cpp">
       <Filter>Tests\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestDispense.cpp">
+      <Filter>Tests\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VendingMachine.h">
@@ -63,6 +66,12 @@
       <Filter>Tests\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TestCoin.h">
+      <Filter>Tests\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Products.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestDispense.h">
       <Filter>Tests\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
