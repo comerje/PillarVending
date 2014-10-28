@@ -92,3 +92,17 @@ eTestResult TestDisplay::TestDisplayAmountInsertedAfterSoldOut()
 
 	return (result == "$1.00" ? eTestResult::Passed : eTestResult::Failed);
 }
+
+eTestResult TestDisplay::TestDisplayExactChange()
+{
+	VendingMachine vm;
+	vm.InsertCoin(eCoin::Quarter);
+	vm.InsertCoin(eCoin::Quarter);
+	vm.InsertCoin(eCoin::Quarter);
+	vm.Dispense(eProducts::Candy);
+	vm.Display();
+
+	std::string result = vm.Display();
+
+	return (result == "EXACT CHANGE" ? eTestResult::Passed : eTestResult::Failed);
+}

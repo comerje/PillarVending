@@ -30,9 +30,13 @@ std::string VendingMachine::Display()
 {
 	switch(m_state)
 	{
-	case eVendingState::Waiting: return std::string("INSERT COIN");
+	case eVendingState::Waiting: 
+		if(CanMakeChange())
+			return std::string("INSERT COIN");
+		else
+			return std::string("EXACT CHANGE");
+		break;
 	case eVendingState::ValidCoin: return StringFormatter::FormatCurrency(m_coinMechanism.Total());
-	case eVendingState::InvalidCoin: break;
 	case eVendingState::Dispense:
 		if(!m_coinMechanism.Total())
 			m_state = eVendingState::Waiting;
@@ -75,14 +79,6 @@ void VendingMachine::Dispense(eProducts product)
 	tempProduct.Remove(1);
 	m_coinMechanism.Clear();
 	m_state = eVendingState::Complete;
-
-	/*Product& tempProduct = m_inventory.find(product)->second;
-	if(m_coinMechanism.Total() >= tempProduct.Price())
-	{
-		MakeChange();
-		tempProduct.Remove(1);
-		m_state = eVendingState::Complete;
-	}*/
 }
 
 void VendingMachine::ReturnCoins()
@@ -97,18 +93,39 @@ void VendingMachine::MakeChange()
 	if(0 == toReturn)
 		return;
 
+	m_coinMechanism.Clear();
+
 	int quartersToReturn = toReturn / 25;
-	toReturn -= (quartersToReturn*25);
+	if(m_coinMechanism[eCoin::Quarter] >= quartersToReturn)
+		toReturn -= (quartersToReturn*25);
+
 	int dimesToReturn = toReturn / 10;
-	toReturn -= (dimesToReturn*10);
+	if(m_coinMechanism[eCoin::Dime] >= dimesToReturn)
+		toReturn -= (dimesToReturn*10);
+	
 	int nickelsToReturn = toReturn / 5;
 
-	for(int i = 0; i < quartersToReturn; ++i)
-		CoinReturn.push_back(eCoin::Quarter);
+	ReturnCoin(eCoin::Quarter, quartersToReturn);
+	ReturnCoin(eCoin::Dime, dimesToReturn);
+	ReturnCoin(eCoin::Nickel, nickelsToReturn);
+}
 
-	for(int i = 0; i < dimesToReturn; ++i)
-		CoinReturn.push_back(eCoin::Dime);
+bool VendingMachine::CanMakeChange()
+{
+	if(m_coinMechanism[eCoin::Nickel] == 0)
+		return false;
 
-	for(int i = 0; i < nickelsToReturn; ++i)
-		CoinReturn.push_back(eCoin::Nickel);
+	if(m_coinMechanism[eCoin::Quarter] == 0)
+		return (m_coinMechanism[eCoin::Dime] >= 5);
+
+	return (m_coinMechanism[eCoin::Dime] >= 2);
+}
+
+void VendingMachine::ReturnCoin(eCoin type, int quantityToReturn)
+{
+	for(int i = 0; i < quantityToReturn; ++i)
+	{
+		--(m_coinMechanism[type]);
+		CoinReturn.push_back(type);
+	}
 }

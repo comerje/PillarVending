@@ -26,10 +26,11 @@ public:
 
 private:
 	void MakeChange();
+	bool CanMakeChange();
+	void ReturnCoin(eCoin type, int quantityToReturn);
 	eVendingState m_state;
 	CoinMechanism m_coinMechanism;
 	eProducts m_product;
-	//std::map<eProducts, int> m_productPriceMap;
 	std::map<eProducts, Product> m_inventory;
 };
 
