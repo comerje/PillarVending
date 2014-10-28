@@ -27,15 +27,6 @@ void VendingMachine::InsertCoin(eCoin coin)
 	m_state = ValidCoin;
 }
 
-void VendingMachine::Dispense(eProducts product)
-{
-	m_state = eVendingState::Dispense;
-	m_product = product;
-
-	if(m_coinMechanism.total() >= m_productPriceMap[product])
-		m_state = eVendingState::Complete;
-}
-
 std::string VendingMachine::Display()
 {
 	switch(m_state)
@@ -57,4 +48,38 @@ std::string VendingMachine::Display()
 	}
 
 	return std::string("");
+}
+
+void VendingMachine::Dispense(eProducts product)
+{
+	m_state = eVendingState::Dispense;
+	m_product = product;
+
+	if(m_coinMechanism.total() >= m_productPriceMap[product])
+	{
+		MakeChange();
+		m_state = eVendingState::Complete;
+	}
+}
+
+void VendingMachine::MakeChange()
+{
+	int toReturn = m_coinMechanism.total() - m_productPriceMap[m_product];
+	if(0 == toReturn)
+		return;
+
+	int quartersToReturn = toReturn / 25;
+	toReturn -= (quartersToReturn*25);
+	int dimesToReturn = toReturn / 10;
+	toReturn -= (dimesToReturn*10);
+	int nickelsToReturn = toReturn / 5;
+
+	for(int i = 0; i < quartersToReturn; ++i)
+		CoinReturn.push_back(eCoin::Quarter);
+
+	for(int i = 0; i < dimesToReturn; ++i)
+		CoinReturn.push_back(eCoin::Dime);
+
+	for(int i = 0; i < nickelsToReturn; ++i)
+		CoinReturn.push_back(eCoin::Nickel);
 }

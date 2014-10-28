@@ -23,6 +23,7 @@ public:
 	std::list<eCoin> CoinReturn;
 
 private:
+	void MakeChange();
 	eVendingState m_state;
 	CoinMechanism m_coinMechanism;
 	eProducts m_product;

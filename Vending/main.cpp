@@ -3,6 +3,7 @@
 #include "TestDisplay.h"
 #include "TestCoin.h"
 #include "TestDispense.h"
+#include "TestReturnCoins.h"
 
 void RunTestDisplay()
 {
@@ -40,11 +41,20 @@ void RunTestDispense()
 	std::cout << std::endl;
 }
 
+void RunTestReturnCoins()
+{
+	TestReturnCoins tests;
+	std::cout << "Test Return Coins" << std::endl
+		<< (tests.TestReturn3Coins() == eTestResult::Passed ? "Passed" : "Failed") << std::endl;
+	std::cout << std::endl;
+}
+
 int main(int argc, const char* argv[])
 {
 	RunTestDisplay();
 	RunTestCoin();
 	RunTestDispense();
+	RunTestReturnCoins();
 
 	std::cin.get();
 
